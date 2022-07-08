@@ -1,0 +1,68 @@
+import reservaNatural.*
+import organismos.*
+
+describe "Pruebas de la reserva natural" {
+	
+	var camello = new Fauna(edad=10, especie="camello", locomocion=correr, peso=30)
+	var caballo = new Fauna(edad=8, especie="caballo", locomocion=correr, peso=40)
+	var roble = new Flora(altura=25, edad=50, especie="roble")
+	var llanura = new Habitat(organismos=[caballo, roble])
+	var desierto = new Habitat(organismos=[camello])
+	var reserva = new ReservaNatural(habitats=[llanura, desierto])
+	
+	test "mayor cantidad de organismos vivos" {
+		assert.equals(reserva.habitatConMasSeresVivos(), llanura)
+	}
+	
+	test "biomasa de la reserva" {
+		assert.equals(reserva.biomasaDeLaReserva(), 138)
+	}
+	
+	test "llanura en equilibrio" {
+		assert.equals(llanura.estaEnEquilibrio(), false)
+	}
+	
+	test "desierto en equilibrio" {
+		assert.equals(desierto.estaEnEquilibrio(), true)
+	}
+	
+	test "algun habitat sin equilibrio" {
+		assert.equals(reserva.habitatSinEquilibrio(), true)
+	}
+	
+	test "camello en todos los habitats" {
+		assert.equals(reserva.especieEnTodosLosHabitats(camello), false)
+	}
+	
+	test "caballo en todos los habitats" {
+		assert.equals(reserva.especieEnTodosLosHabitats(caballo), false)
+	}
+	
+	test "roble en todos los habitats" {
+		assert.equals(reserva.especieEnTodosLosHabitats(roble), false)
+	}
+	
+	test "camello no es pequeño" {
+		assert.equals(camello.esPequenio(), false)
+	}
+	
+	test "caballo no es pequeño" {
+		assert.equals(caballo.esPequenio(), false)
+	}
+	
+	test "roble no es pequeño" {
+		assert.equals(roble.esPequenio(), false)
+	}
+	
+	test "camello no es grande" {
+		assert.equals(camello.esGrande(), false)
+	}
+	
+	test "caballo no es grande" {
+		assert.equals(caballo.esGrande(), false)
+	}
+	
+	test "roble es grande" {
+		assert.equals(roble.esGrande(), true)
+	}
+}
